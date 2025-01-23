@@ -1,11 +1,11 @@
 package org.example.project.config
 
-
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.nlr.rd.ui.auth.onboarding.OnBoardingPage
 import org.example.project.ui.auth.splash.SplashPage
 
 
@@ -17,11 +17,11 @@ fun AppHost(
     NavHost(navController = navHostController, startDestination = Splash) {
         composable<Splash> {
             SplashPage(navigateUp = {
-//                navHostController.navigate(OnBoarding) {
-//                    popUpTo(Splash) {
-//                        inclusive = true;
-//                    }
-//                }
+                navHostController.navigate(OnBoarding) {
+                    popUpTo(Splash) {
+                        inclusive = true;
+                    }
+                }
             })
         }
 //        composable<SelectLanguage> {
@@ -41,13 +41,13 @@ fun AppHost(
 //            })
 //        }
 //
-//        composable<OnBoarding> {
-//            OnBoardingPage(
-//                navigateUp = {
-//                    navHostController.navigate(SelectLanguage)
-//                },
-//            )
-//        }
+        composable<OnBoarding> {
+            OnBoardingPage(
+                navigateUp = {
+                    navHostController.navigate(SelectLanguage)
+                },
+            )
+        }
 //
 //        composable<Registration> {
 //            RegistrationPage(navigateUp = {})

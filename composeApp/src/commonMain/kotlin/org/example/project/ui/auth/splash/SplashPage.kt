@@ -1,6 +1,4 @@
 package org.example.project.ui.auth.splash
-
-
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -25,8 +23,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.TileMode
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.ViewModel
 import kmmapp.composeapp.generated.resources.Res
 import kmmapp.composeapp.generated.resources.compose_multiplatform
+import kmmapp.composeapp.generated.resources.nlr_app_logo
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
@@ -34,8 +34,11 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 fun SplashPage(
     modifier: Modifier = Modifier,
     navigateUp: () -> Unit,
+    viewModel: SplashViewModel = SplashViewModel()
 ) {
+    val state = viewModel.splashState.value;
     Scaffold {
+
         Column(
             modifier = modifier
                 .padding(it)
@@ -53,7 +56,13 @@ fun SplashPage(
             horizontalAlignment = Alignment.CenterHorizontally
 
         ) {
-            SplashLoadingState()
+            when (state) {
+                is SplashUiState.SplashLoading -> SplashLoadingState()
+                is SplashUiState.SplashLoaded -> {
+                    navigateUp();
+                }
+                is SplashUiState.SplashError -> SplashErrorState()
+            }
         }
     }
 
@@ -61,7 +70,6 @@ fun SplashPage(
 
 @Composable
 fun SplashErrorState(modifier: Modifier = Modifier) {
-
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -86,7 +94,7 @@ fun SplashLoadingState(modifier: Modifier = Modifier) {
                 shape = RoundedCornerShape(8.dp), // Use the same rounded corner radius for the border
                 color = Color.Black // Border color
             ),
-        painter = painterResource(Res.drawable.compose_multiplatform),
+        painter = painterResource(Res.drawable.nlr_app_logo),
         contentDescription = null
     )
 }
